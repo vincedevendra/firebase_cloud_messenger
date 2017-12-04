@@ -1,6 +1,6 @@
 module FirebaseCloudMessenger
   module Apns
-    class Config < Object
+    class Config < ApnsObject
       FIELDS = %i(headers payload).freeze
       attr_accessor(*FIELDS)
 

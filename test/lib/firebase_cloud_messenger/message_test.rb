@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class FirebaseCloudMessenger::ClientTest < MiniTest::Spec
+class FirebaseCloudMessenger::MessageTest < MiniTest::Spec
   describe "#new" do
     it "sets properties based on the hash arg" do
       msg = FirebaseCloudMessenger::Message.new(name: "name",
@@ -27,19 +27,40 @@ class FirebaseCloudMessenger::ClientTest < MiniTest::Spec
 
   describe "#to_h" do
     it "returns a hash version of the object" do
+      data = { some: "data" }
+      notification = FirebaseCloudMessenger::Notification.new(title: "title")
+
+      android_notification = FirebaseCloudMessenger::Android::Notification.new(title: "title")
+      android_config = FirebaseCloudMessenger::Android::Config.new(notification: android_notification)
+
+      webpush_notification = FirebaseCloudMessenger::Webpush::Notification.new(title: "title")
+      webpush_config = FirebaseCloudMessenger::Webpush::Config.new(notification: webpush_notification)
+
+      apns_alert = FirebaseCloudMessenger::Apns::Alert.new(title: "title")
+      apns_payload = FirebaseCloudMessenger::Apns::Payload.new(alert: apns_alert, badge: 2)
+      apns_config = FirebaseCloudMessenger::Apns::Config.new(payload: apns_payload)
+
       msg = FirebaseCloudMessenger::Message.new(name: "name",
-                                                data: "data",
-                                                notification: "notification",
-                                                android: "android",
-                                                webpush: "webpush",
-                                                apns: "apns",
+                                                data: data,
+                                                notification: notification,
+                                                android: android_config,
+                                                webpush: webpush_config,
+                                                apns: apns_config,
                                                 token: "token",
                                                 topic: "topic",
                                                 condition: "condition")
 
-      expected = %i(name data notification android webpush apns token topic condition).each_with_object({}) do |field, hash|
-        hash[field] = field.to_s
-      end
+      expected = {
+        name: "name",
+        data: { some: "data" },
+        notification: { title: "title" },
+        android: { notification: { title: "title" } },
+        webpush: { notification: { title: "title" } },
+        apns: { payload: { alert: { title: "title" }, badge: 2 } },
+        token: "token",
+        topic: "topic",
+        condition: "condition"
+      }
 
       assert_equal expected, msg.to_h
     end
