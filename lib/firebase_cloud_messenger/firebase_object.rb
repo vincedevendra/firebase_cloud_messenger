@@ -1,5 +1,7 @@
 module FirebaseCloudMessenger
   class FirebaseObject
+    attr_writer :errors
+
     def initialize(data, fields)
       @fields = fields
 
@@ -25,22 +27,22 @@ module FirebaseCloudMessenger
       true
     end
 
-    private
+    def to_h
+      fields.each_with_object({}) do |field, object_hash|
+        val = send(field)
+        next if val == false
+        val = val.to_h if ![String, Numeric, TrueClass, FalseClass, NilClass, Array].include?(val.class)
 
-    attr_reader :fields
+        object_hash[field] = val
+      end
+    end
 
     def errors
       @errors ||= []
     end
 
-    def to_h
-      fields.each_with_object({}) do |field, object_hash|
-        val = send(field)
-        next if val == false
-        val = val.to_h if ![String, Numeric, Boolean, Array].include?(val.class)
+    private
 
-        object_hash[field] = val
-      end
-    end
+    attr_reader :fields
   end
 end

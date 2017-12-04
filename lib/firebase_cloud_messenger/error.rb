@@ -20,7 +20,7 @@ module FirebaseCloudMessenger
     end
 
     def response_status
-      @response.code
+      @response.code.to_i
     end
 
     def response_body
@@ -31,8 +31,8 @@ module FirebaseCloudMessenger
       JSON.parse(response_body)
     end
 
-    def error_details
-      parsed_response.dig("error", "details")
+    def details
+      parsed_response["error"]["details"]
     end
 
     private
@@ -40,10 +40,10 @@ module FirebaseCloudMessenger
     def error_message
       return nil if @response.nil?
 
-      <<~MSG
+      <<-MSG
       Status: #{response_status}
 
-      #{parsed_response.dig("error", "message")}
+      #{parsed_response["error"]["message"]}
       MSG
     end
   end
