@@ -1,0 +1,54 @@
+module FirebaseCloudMessenger
+  class Error < StandardError
+    def self.from_response(response)
+      status = response.code
+
+      klass = case status.to_i
+              when 400 then FirebaseCloudMessenger::BadRequest
+              when 401 then FirebaseCloudMessenger::Unauthorized
+              when 403 then FirebaseCloudMessenger::Forbidden
+              else self
+              end
+
+      klass.new(response)
+    end
+
+    def initialize(response = nil)
+      @response = response
+
+      super(error_message)
+    end
+
+    def response_status
+      @response.code
+    end
+
+    def response_body
+      @response.body
+    end
+
+    def parsed_response
+      JSON.parse(response_body)
+    end
+
+    def error_details
+      parsed_response.dig("error", "details")
+    end
+
+    private
+
+    def error_message
+      return nil if @response.nil?
+
+      <<~MSG
+      Status: #{response_status}
+
+      #{parsed_response.dig("error", "message")}
+      MSG
+    end
+  end
+
+  class BadRequest < Error; end
+  class Unauthorized < Error; end
+  class Forbidden < Error; end
+end
