@@ -6,18 +6,19 @@ require 'firebase_cloud_messenger/version'
 Gem::Specification.new do |spec|
   spec.name          = "firebase-cloud-messenger"
   spec.version       = FirebaseCloudMessenger::VERSION
+  spec.license       = "MIT"
   spec.authors       = ["Vince DeVendra"]
   spec.email         = ["vdevendra@patientslikeme.com"]
+  spec.homepage      = "https://github.com/patientslikeme/firebase-cloud-messenger"
 
   spec.summary       = %q{A ruby api wrapper for the FirebaseCloudMesenger API}
   spec.description   = spec.summary
   spec.require_paths = ["lib"]
 
-  spec.add_runtime_dependency "googleauth"
-  spec.add_runtime_dependency "json-schema"
+  spec.add_runtime_dependency "googleauth",  "~> 0.6"
+  spec.add_runtime_dependency "json-schema", "~> 0.8"
 
-  spec.add_development_dependency 'rake'
-  spec.add_development_dependency 'minitest'
-  spec.add_development_dependency 'mocha'
-  spec.add_development_dependency 'pry'
+  spec.add_development_dependency "rake"
+  spec.add_development_dependency "minitest"
+  spec.add_development_dependency "mocha"
 end
