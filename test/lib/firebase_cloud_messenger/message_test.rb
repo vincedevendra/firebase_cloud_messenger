@@ -102,7 +102,7 @@ class FirebaseCloudMessenger::MessageTest < MiniTest::Spec
         message = FirebaseCloudMessenger::Message.new(name: "name")
 
         error = FirebaseCloudMessenger::BadRequest.new
-        error.stubs(error_details: ["bad", "data"])
+        error.stubs(details: ["bad", "data"])
         FirebaseCloudMessenger.expects(:send).with(message: message, validate_only: true, conn: nil).raises(error)
 
         message_valid = message.valid?(against_api: true)

@@ -31,8 +31,12 @@ module FirebaseCloudMessenger
     def validate_against_api!(conn)
       begin
         FirebaseCloudMessenger.send(message: self, validate_only: true, conn: conn)
-      rescue BadRequest => e
-        self.errors += e.error_details
+      rescue FirebaseCloudMessenger::Error => e
+        if e.details
+          self.errors += e.details
+        else
+          self.errors << e.parsed_response["error"]["message"]
+        end
       end
     end
 
