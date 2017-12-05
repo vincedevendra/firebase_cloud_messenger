@@ -17,13 +17,24 @@ class FirebaseCloudMessengerTest < MiniTest::Spec
   end
 
   describe "::validate_message" do
-    it "creates a new instance of client and sends along message with validate_only: true" do
-      msg = "Hello I am a message"
-      conn = "CooooooonnnnN!"
+    describe "with a hash message" do
+      it "creates a message and checks it for validity" do
+        hash_message = { token: "token" }
+        mock_message = mock('message')
+        mock_message.expects(:valid?).with(nil, against_api: false).returns(true)
+        FirebaseCloudMessenger::Message.expects(:new).with(hash_message).returns(mock_message)
 
-      FirebaseCloudMessenger.expects(:send).with(message: msg, validate_only: true, conn: conn)
+        assert FirebaseCloudMessenger.validate_message(hash_message)
+      end
+    end
 
-      FirebaseCloudMessenger.validate_message(msg, conn)
+    describe "with a message object" do
+      it "checks the message for validity" do
+        msg = FirebaseCloudMessenger::Message.new(token: "token")
+        msg.expects(:valid?).with(nil, against_api: false).returns(true)
+
+        assert FirebaseCloudMessenger.validate_message(msg)
+      end
     end
   end
 end

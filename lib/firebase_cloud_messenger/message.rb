@@ -1,3 +1,6 @@
+require 'firebase_cloud_messenger/schema'
+require 'json-schema'
+
 module FirebaseCloudMessenger
   class Message < FirebaseObject
     FIELDS = %i(name data notification android webpush apns token topic condition).freeze
@@ -9,19 +12,32 @@ module FirebaseCloudMessenger
       super(data, FIELDS)
     end
 
-    def validate!
-      begin
-        FirebaseCloudMessenger.validate_message(self)
-      rescue BadRequest => e
-        self.errors += e.error_details
-        return false
+    def valid?(conn = nil, against_api: false)
+      if against_api
+        validate_against_api!(conn)
+      else
+        validate_against_schema
       end
 
-      true
+      errors.none?
     end
 
     def errors
       @errors ||= []
+    end
+
+    private
+
+    def validate_against_api!(conn)
+      begin
+        FirebaseCloudMessenger.send(message: self, validate_only: true, conn: conn)
+      rescue BadRequest => e
+        self.errors += e.error_details
+      end
+    end
+
+    def validate_against_schema
+      self.errors += JSON::Validator.fully_validate(FirebaseCloudMessenger::SCHEMA, to_h)
     end
   end
 end

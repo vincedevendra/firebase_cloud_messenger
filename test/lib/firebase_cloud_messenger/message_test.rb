@@ -26,67 +26,105 @@ class FirebaseCloudMessenger::MessageTest < MiniTest::Spec
   end
 
   describe "#to_h" do
-    it "returns a hash version of the object" do
-      data = { some: "data" }
-      notification = FirebaseCloudMessenger::Notification.new(title: "title")
+    describe "with objects all the way down" do
+      it "returns a hash version of the object" do
+        data = { some: "data" }
+        notification = FirebaseCloudMessenger::Notification.new(title: "title")
 
-      android_notification = FirebaseCloudMessenger::Android::Notification.new(title: "title")
-      android_config = FirebaseCloudMessenger::Android::Config.new(notification: android_notification)
+        android_notification = FirebaseCloudMessenger::Android::Notification.new(title: "title")
+        android_config = FirebaseCloudMessenger::Android::Config.new(notification: android_notification)
 
-      webpush_notification = FirebaseCloudMessenger::Webpush::Notification.new(title: "title")
-      webpush_config = FirebaseCloudMessenger::Webpush::Config.new(notification: webpush_notification)
+        webpush_notification = FirebaseCloudMessenger::Webpush::Notification.new(title: "title")
+        webpush_config = FirebaseCloudMessenger::Webpush::Config.new(notification: webpush_notification)
 
-      apns_alert = FirebaseCloudMessenger::Apns::Alert.new(title: "title")
-      apns_payload = FirebaseCloudMessenger::Apns::Payload.new(alert: apns_alert, badge: 2)
-      apns_config = FirebaseCloudMessenger::Apns::Config.new(payload: apns_payload)
+        apns_alert = FirebaseCloudMessenger::Apns::Alert.new(title: "title")
+        apns_payload = FirebaseCloudMessenger::Apns::Payload.new(alert: apns_alert, badge: 2)
+        apns_config = FirebaseCloudMessenger::Apns::Config.new(payload: apns_payload)
 
-      msg = FirebaseCloudMessenger::Message.new(name: "name",
-                                                data: data,
-                                                notification: notification,
-                                                android: android_config,
-                                                webpush: webpush_config,
-                                                apns: apns_config,
-                                                token: "token",
-                                                topic: "topic",
-                                                condition: "condition")
+        msg = FirebaseCloudMessenger::Message.new(name: "name",
+                                                  data: data,
+                                                  notification: notification,
+                                                  android: android_config,
+                                                  webpush: webpush_config,
+                                                  apns: apns_config,
+                                                  token: "token",
+                                                  topic: "topic",
+                                                  condition: "condition")
 
-      expected = {
-        name: "name",
-        data: { some: "data" },
-        notification: { title: "title" },
-        android: { notification: { title: "title" } },
-        webpush: { notification: { title: "title" } },
-        apns: { payload: { alert: { title: "title" }, badge: 2 } },
-        token: "token",
-        topic: "topic",
-        condition: "condition"
-      }
+        expected = {
+          name: "name",
+          data: { some: "data" },
+          notification: { title: "title" },
+          android: { notification: { title: "title" } },
+          webpush: { notification: { title: "title" } },
+          apns: { payload: { alert: { title: "title" }, badge: 2 } },
+          token: "token",
+          topic: "topic",
+          condition: "condition"
+        }
 
-      assert_equal expected, msg.to_h
+        assert_equal expected, msg.to_h
+      end
+    end
+
+    describe "with hashes instead of objects" do
+      it "returns a hash version of the object" do
+        args = {
+          name: "name",
+          data: { some: "data" },
+          notification: { title: "title" },
+          android: { notification: { title: "title" } },
+          webpush: { notification: { title: "title" } },
+          apns: { payload: { alert: { title: "title" }, badge: 2 } },
+          token: "token",
+          topic: "topic",
+          condition: "condition"
+        }
+
+        msg = FirebaseCloudMessenger::Message.new(args.dup)
+
+        assert_equal args, msg.to_h
+      end
     end
   end
 
-  describe "#validate" do
-     it "returns the true if there are no errors" do
-       message = FirebaseCloudMessenger::Message.new(name: "name")
+  describe "#valid?" do
+    describe "against_api: true" do
+      it "returns true if there are no errors" do
+        message = FirebaseCloudMessenger::Message.new(name: "name")
 
-       FirebaseCloudMessenger.expects(:validate_message).with(message).returns(true)
-       valid = message.validate!
+        FirebaseCloudMessenger.expects(:send).with(message: message, validate_only: true, conn: nil).returns(true)
 
-       assert_equal true, valid
-     end
+        assert message.valid?(against_api: true)
+      end
 
-     it "adds errors and returns false there are any errors" do
-       message = FirebaseCloudMessenger::Message.new(name: "name")
+      it "adds errors and returns false there are any errors" do
+        message = FirebaseCloudMessenger::Message.new(name: "name")
 
-       error = FirebaseCloudMessenger::BadRequest.new
-       error.stubs(error_details: ["bad", "data"])
-       FirebaseCloudMessenger.expects(:validate_message).with(message).raises(error)
+        error = FirebaseCloudMessenger::BadRequest.new
+        error.stubs(error_details: ["bad", "data"])
+        FirebaseCloudMessenger.expects(:send).with(message: message, validate_only: true, conn: nil).raises(error)
 
-       message_valid = message.validate!
+        message_valid = message.valid?(against_api: true)
 
-       assert_equal ["bad", "data"], message.errors
-       refute message_valid
-     end
+        assert_equal ["bad", "data"], message.errors
+        refute message_valid
+      end
+    end
+
+    describe "against_api: false" do
+      it "returns false and sets errors if the message doesn't validate against the schema" do
+        message = FirebaseCloudMessenger::Message.new(name: "name")
+
+        refute message.valid?
+        refute_empty message.errors
+      end
+
+      it "returns true if the message validates against the schema" do
+        message = FirebaseCloudMessenger::Message.new(data: { "some" => "data" }, token: "token", notification: { title: "title" })
+
+        assert message.valid?
+      end
+    end
   end
 end

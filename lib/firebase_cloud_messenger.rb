@@ -18,7 +18,9 @@ module FirebaseCloudMessenger
     Client.new.send(message, validate_only, conn)
   end
 
-  def self.validate_message(message, conn = nil)
-    send(message: message, validate_only: true, conn: conn)
+  def self.validate_message(message, conn = nil, against_api: false)
+    message = Message.new(message) if message.is_a?(Hash)
+
+    message.valid?(conn, against_api: against_api)
   end
 end
