@@ -11,7 +11,7 @@ module FirebaseCloudMessenger
           "title" => { "type" => "string" },
           "body"  => { "type" => "string" }
         },
-        "additional_properties" => false
+        "additionalProperties" => false
       },
       "android_config" => {
         "type" => "object",
@@ -23,7 +23,7 @@ module FirebaseCloudMessenger
           "data"                     => { "$ref" => "#/definitions/data" },
           "notification"             => { "$ref" => "#/definitions/android_notificatoin" }
         },
-        "additional_properties" => false
+        "additionalProperties" => false
       },
       "android_notification" => {
         "type" => "object",
@@ -40,7 +40,7 @@ module FirebaseCloudMessenger
           "title_loc_key"  => { "type" => "string" },
           "title_loc_args" => { "type" => "array", "items" => { "type" => "string" } }
         },
-        "additional_properties" => false
+        "additionalProperties" => false
       },
       "webpush_config" => {
         "type" => "object",
@@ -49,7 +49,7 @@ module FirebaseCloudMessenger
           "data"         => { "$ref" => "#/definitions/data" },
           "notification" => { "$ref" => "#/definitions/webpush_notification" }
         },
-        "additional_properties" => false
+        "additionalProperties" => false
       },
       "webpush_notification" => {
         "type" => "object",
@@ -58,7 +58,7 @@ module FirebaseCloudMessenger
           "body"           => { "type" => "string" },
           "icon"           => { "type" => "string" }
         },
-        "additional_properties" => false
+        "additionalProperties" => false
       },
       "apns" => {
         "type" => "object",
@@ -66,7 +66,7 @@ module FirebaseCloudMessenger
           "headers" => { "$ref" => "#/definitions/data" },
           "payload" => { "$ref" => "#/definitions/apns_payload" }
         },
-        "additional_properties" => false
+        "additionalProperties" => false
       },
       "apns_alert" => {
         "anyOf" => [
@@ -83,7 +83,7 @@ module FirebaseCloudMessenger
               "loc-args"       => { "type" => "array", "items" => { "type" => "string" } },
               "launch-image"   => { "type" => "string" }
             },
-            "additional_properties" => false
+            "additionalProperties" => false
           }
         ]
       },
@@ -97,21 +97,21 @@ module FirebaseCloudMessenger
           "category"          => { "type" => "string" },
           "thread-id"         => { "type" => "string" }
         },
-        "additional_properties" => false
+        "additionalProperties" => false
       }
     },
     "type" => "object",
     "properties" => {
       "data"         => { "$ref" => "#/definitions/data" },
       "notification" => { "$ref" => "#/definitions/notification" },
-      "android"      => { "$ref" => "#/definitions/android" },
-      "webpush"      => { "$ref" => "#/definitions/webpush" },
+      "android"      => { "$ref" => "#/definitions/android_config" },
+      "webpush"      => { "$ref" => "#/definitions/webpush_config" },
       "apns"         => { "$ref" => "#/definitions/apns" },
       "token"        => { "type" => "string" },
       "topic"        => { "type" => "topic" },
       "condition"    => { "type" => "string" }
     },
-    "additional_properties" => false,
+    "additionalProperties" => false,
     "oneOf" => [
       { "required" => ["token"] },
       { "required" => ["topic"] },
