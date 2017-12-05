@@ -10,10 +10,12 @@ module FirebaseCloudMessenger
     end
 
     def fetch_access_token_info
-      @authorizer.fetch_access_token!
+      authorizer.fetch_access_token!
     end
 
     private
+
+    attr_reader :authorizer
 
     def get_authorizer
       begin

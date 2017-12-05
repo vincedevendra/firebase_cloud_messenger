@@ -2,8 +2,8 @@ require 'firebase_cloud_messenger/error'
 
 module FirebaseCloudMessenger
   class Client
-    attr_writer :max_retry_count, :access_token, :project_id
-    attr_reader :credentials_path
+    attr_writer :max_retry_count, :project_id
+    attr_accessor :access_token, :credentials_path
 
     def initialize(credentials_path = nil)
       @credentials_path = credentials_path || ENV['GOOGLE_APPLICATION_CREDENTIALS']
@@ -59,8 +59,8 @@ module FirebaseCloudMessenger
     end
 
     def refresh_access_token_info
-      @access_token = nil
-      @access_token_info = auth_client.fetch_access_token_info
+      self.access_token = nil
+      self.access_token_info = auth_client.fetch_access_token_info
     end
 
     def project_id
@@ -72,10 +72,12 @@ module FirebaseCloudMessenger
     end
 
     def max_retry_count
-      @max_retry_count || 1
+      @max_retry_count ||= 1
     end
 
     private
+
+    attr_writer :access_token_info
 
     def make_fcm_request(message, validate_only, conn = request_conn)
       conn.post(send_url.path,

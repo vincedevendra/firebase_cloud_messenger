@@ -1,5 +1,7 @@
 module FirebaseCloudMessenger
   class Error < StandardError
+    attr_reader :response
+
     def self.from_response(response)
       status = response.code
 
@@ -20,11 +22,11 @@ module FirebaseCloudMessenger
     end
 
     def response_status
-      @response.code.to_i
+      response.code.to_i
     end
 
     def response_body
-      @response.body
+      response.body
     end
 
     def parsed_response
@@ -38,7 +40,7 @@ module FirebaseCloudMessenger
     private
 
     def error_message
-      return nil if @response.nil?
+      return nil if response.nil?
 
       <<-MSG
       Status: #{response_status}
