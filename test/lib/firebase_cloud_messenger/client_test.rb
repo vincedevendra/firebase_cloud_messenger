@@ -54,7 +54,10 @@ class FirebaseCloudMessenger::ClientTest < MiniTest::Spec
       conn = mock("request_conn")
       conn.expects(:post).twice.with(any_parameters).returns(mock_401).then.returns(mock_200)
 
-      FirebaseCloudMessenger::AuthClient.expects(:fetch_access_token_info).twice.returns("1")
+      mock_auth_client = mock('auth_client')
+      mock_auth_client.expects(:fetch_access_token_info).twice.returns("1")
+
+      FirebaseCloudMessenger::AuthClient.expects(:new).returns(mock_auth_client)
 
       client.send(message, false, conn)
     end
@@ -64,10 +67,10 @@ class FirebaseCloudMessenger::ClientTest < MiniTest::Spec
     let(:client) { FirebaseCloudMessenger::Client.new }
 
     it "calls out to AuthClient again if the token is refreshed" do
-      FirebaseCloudMessenger::AuthClient
-        .expects(:fetch_access_token_info).twice
-        .returns("access_token" => "2")
-        .then.returns("access_token" => "3")
+      mock_auth_client = mock('auth_client')
+      mock_auth_client.expects(:fetch_access_token_info).twice.returns("access_token" => "2").returns("access_token" => "3")
+
+      FirebaseCloudMessenger::AuthClient.expects(:new).returns(mock_auth_client)
 
       assert_equal "2", client.access_token
 
