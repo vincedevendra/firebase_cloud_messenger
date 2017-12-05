@@ -14,8 +14,12 @@ require 'firebase_cloud_messenger/webpush'
 
 
 module FirebaseCloudMessenger
+  class << self
+    attr_accessor :credentials_path
+  end
+
   def self.send(message: {}, validate_only: false, conn: nil)
-    Client.new.send(message, validate_only, conn)
+    Client.new(credentials_path).send(message, validate_only, conn)
   end
 
   def self.validate_message(message, conn = nil, against_api: false)
