@@ -2,8 +2,8 @@ require 'firebase_cloud_messenger/error'
 
 module FirebaseCloudMessenger
   class Client
-    attr_writer :max_retry_count, :project_id
-    attr_accessor :access_token, :credentials_path
+    attr_writer :max_retry_count, :project_id, :access_token
+    attr_accessor :credentials_path
 
     def initialize(credentials_path = nil)
       @credentials_path = credentials_path || ENV['GOOGLE_APPLICATION_CREDENTIALS']
