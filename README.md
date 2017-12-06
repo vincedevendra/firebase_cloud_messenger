@@ -3,6 +3,11 @@
 firebase-cloud-messenger wraps Google's API to make sending push notifications to iOS, android, and
 web push notifications from your server easy.
 
+NB: Google released the [FCM HTTP v1 API](https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages)
+in November 2017, giving legacy status to the older but still supported HTTP and XMPP apis.
+This gem only targets the [FCM HTTP v1 API], which Google [recommends using for new projects](https://firebase.google.com/docs/cloud-messaging/server),
+because it is the most up-to-date and secure.
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -30,11 +35,31 @@ two ways:
 
 ### Sending a Message
 
-Send messages with built-in data objects:
+You can see how your message should be structured [here](https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages)
+firebase-cloud-messenger provides built-in data classes for each json object type in the FCM API
+specification, but you can also build up a hash message on your own, or use some combination of the
+two.
+
+Send messages with built-in data objects, which can be built through a hash argument to the
+initializer or via writer methods:
 ```ruby
 android_notification = FirebaseCloudMessenger::Android::Notification.new(title: "title")
 android_config = FirebaseCloudMessenger::Android::AndroidConfig.new(notification: android_notification)
 message = FirebaseCloudMessenger::Message.new(android: android_config, token "a_device_token")
+
+FirebaseCloudMessenger.send(message: message) # => { "name" => "name_from_fcm" }
+
+# OR
+
+android_notification = FirebaseCloudMessenger::Android::Notification.new
+android_notification.title = "title"
+
+android_config = FirebaseCloudMessenger::Android::AndroidConfig.new
+android_config.notification = android_notification
+
+message = FirebaseCloudMessenger::Message.new
+message.android = android_config
+message.token = "a_device_token"
 
 FirebaseCloudMessenger.send(message: message) # => { "name" => "name_from_fcm" }
 ```
