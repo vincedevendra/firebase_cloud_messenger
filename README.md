@@ -98,7 +98,7 @@ rescue FirebaseCloudMessenger::Error => e
   e.class # => FirebaseCloudMessenger::BadRequest
   e.message # => A message from fcm about what's wrong with the request
   e.status # => 400
-  e.error_details # => An array of error details from fcm
+  e.details # => An array of error details from fcm
 end
 ```
 

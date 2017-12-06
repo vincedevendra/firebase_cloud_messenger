@@ -3,7 +3,7 @@ module FirebaseCloudMessenger
     "definitions" => {
       "data" => {
         "type" => "object",
-        "additional_properties" => { "type" => "string" }
+        "additionalProperties" => { "type" => "string" }
       },
       "notification" => {
         "type" => "object",
@@ -108,7 +108,7 @@ module FirebaseCloudMessenger
       "webpush"      => { "$ref" => "#/definitions/webpush_config" },
       "apns"         => { "$ref" => "#/definitions/apns" },
       "token"        => { "type" => "string" },
-      "topic"        => { "type" => "topic" },
+      "topic"        => { "type" => "string" },
       "condition"    => { "type" => "string" }
     },
     "additionalProperties" => false,
