@@ -4,12 +4,12 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'firebase_cloud_messenger/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "firebase-cloud-messenger"
+  spec.name          = "firebase_cloud_messenger"
   spec.version       = FirebaseCloudMessenger::VERSION
   spec.license       = "MIT"
   spec.authors       = ["Vince DeVendra"]
   spec.email         = ["vdevendra@patientslikeme.com"]
-  spec.homepage      = "https://github.com/patientslikeme/firebase-cloud-messenger"
+  spec.homepage      = "https://github.com/patientslikeme/firebase_cloud_messenger"
 
   spec.summary       = %q{A ruby api wrapper for the FirebaseCloudMesenger API}
   spec.description   = spec.summary
