@@ -21,7 +21,7 @@ module FirebaseCloudMessenger
           "ttl"                      => { "type" => "string", "format" => "^[0-9]+\.[0-9]+s$" },
           "restricted_package_name"  => { "type" => "string" },
           "data"                     => { "$ref" => "#/definitions/data" },
-          "notification"             => { "$ref" => "#/definitions/android_notificatoin" }
+          "notification"             => { "$ref" => "#/definitions/android_notification" }
         },
         "additionalProperties" => false
       },
