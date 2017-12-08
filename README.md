@@ -1,6 +1,6 @@
-# firebase-cloud-messenger
+# firebase_cloud_messenger
 
-firebase-cloud-messenger wraps Google's API to make sending push notifications to iOS, android, and
+firebase_cloud_messenger wraps Google's API to make sending push notifications to iOS, android, and
 web push notifications from your server easy.
 
 NB: Google released the [FCM HTTP v1 API](https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages)
@@ -25,7 +25,7 @@ Or install it yourself as:
     $ gem install firebase_cloud_messenger
 
 In order for google to authenticate requests to Firebase Cloud Messenger, you must have your
-credentials file in a place that's accessible. You can tell firebase-cloud-messenger where it is in
+credentials file in a place that's accessible. You can tell firebase_cloud_messenger where it is in
 two ways:
 
 1. `FirebaseCloudMessenger.credentials_path = "path/to/credentials/file.json"`
@@ -36,7 +36,7 @@ two ways:
 ### Sending a Message
 
 You can see how your message should be structured [here](https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages)
-firebase-cloud-messenger provides built-in data classes for each json object type in the FCM API
+firebase_cloud_messenger provides built-in data classes for each json object type in the FCM API
 specification, but you can also build up a hash message on your own, or use some combination of the
 two.
 
