@@ -2,6 +2,12 @@ require 'test_helper'
 
 class FirebaseCloudMessengerTest < MiniTest::Spec
   describe "::send" do
+    it "requires either a project_id or credentials_path" do
+      assert_raises FirebaseCloudMessenger::SetupError do
+        FirebaseCloudMessenger.send(message: { notification: { title: "title" } })
+      end
+    end
+
     it "creates a new instance of client and sends along the args" do
       msg = "Hello I am a message"
       validate_only = false
@@ -11,6 +17,8 @@ class FirebaseCloudMessengerTest < MiniTest::Spec
       mock_client.expects(:send).with(msg, validate_only, conn)
 
       FirebaseCloudMessenger::Client.expects(:new).returns(mock_client)
+
+      FirebaseCloudMessenger.project_id = "2"
 
       FirebaseCloudMessenger.send(message: msg, validate_only: validate_only, conn: conn)
     end

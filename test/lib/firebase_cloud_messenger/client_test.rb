@@ -1,10 +1,26 @@
 require 'test_helper'
 
 class FirebaseCloudMessenger::ClientTest < MiniTest::Spec
+  describe "::new" do
+    it "throws an argument error if project_id, credentials_path, env var are not supplied" do
+      ENV.stubs(:[]).with('GOOGLE_APPLICATION_CREDENTIALS').returns(nil)
+
+      assert_raises ArgumentError do
+        FirebaseCloudMessenger::Client.new
+      end
+    end
+
+    it "does not throw an argument error if GOOGLE_APPLICATION_CREDENTIALS is set" do
+      ENV.stubs(:[]).with('GOOGLE_APPLICATION_CREDENTIALS').returns("path/to/credentials.json")
+
+      FirebaseCloudMessenger::Client.new
+    end
+  end
+
   describe "#send" do
     let (:client) do
-      client = FirebaseCloudMessenger::Client.new
-      client.project_id = "2" #Prevents parsing of credentials file
+      client = FirebaseCloudMessenger::Client.new(nil, "2")
+
       client
     end
 
@@ -64,7 +80,7 @@ class FirebaseCloudMessenger::ClientTest < MiniTest::Spec
   end
 
   describe "access token fetching and refreshing" do
-    let(:client) { FirebaseCloudMessenger::Client.new }
+    let(:client) { FirebaseCloudMessenger::Client.new(nil, "2") }
 
     it "calls out to AuthClient again if the token is refreshed" do
       mock_auth_client = mock('auth_client')
@@ -80,23 +96,27 @@ class FirebaseCloudMessenger::ClientTest < MiniTest::Spec
   end
 
   describe "#project_id" do
-    let(:client) { FirebaseCloudMessenger::Client.new }
+    it "reads the project_id from the credentials file if none is supplied to the initializer" do
+      ENV.stubs(:[]).with('GOOGLE_APPLICATION_CREDENTIALS').returns("Hello")
 
-    it "reads the project_id from the credentials file" do
-      ENV['GOOGLE_APPLICATION_CREDENTIALS'] = "Hello"
+      client = FirebaseCloudMessenger::Client.new
       credentials_path = client.credentials_path
 
       File.expects(:read).with(credentials_path).returns({ project_id: "42" }.to_json)
 
       assert_equal "42", client.project_id
     end
+
+    it "returns the value passed into the intitializer" do
+      client = FirebaseCloudMessenger::Client.new(nil, "2")
+      assert_equal "2", client.project_id
+    end
   end
 
   describe "#send_url" do
-    let(:client) { FirebaseCloudMessenger::Client.new }
+    let(:client) { FirebaseCloudMessenger::Client.new(nil, "2") }
 
     it "returns the proper api url" do
-      client.project_id = "2"
       url = client.send_url
       assert_equal "https", url.scheme
       assert_equal "fcm.googleapis.com", url.hostname
@@ -105,10 +125,9 @@ class FirebaseCloudMessenger::ClientTest < MiniTest::Spec
   end
 
   describe "#request_conn" do
-    let(:client) { FirebaseCloudMessenger::Client.new }
+    let(:client) { FirebaseCloudMessenger::Client.new(nil, "2") }
 
     it "has the correct url" do
-      client.project_id = "2"
       conn = client.request_conn
       assert_equal 443, conn.port
       assert_equal "fcm.googleapis.com", conn.address
