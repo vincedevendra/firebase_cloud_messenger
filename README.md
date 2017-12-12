@@ -1,5 +1,9 @@
 # firebase_cloud_messenger
 
+Check out PLM's [blog post](http://tech.patientslikeme.com/2017/12/07/firebase-cloud-messenger.html)
+about our development and use of firebase_cloud_messenger for more information about setting up and
+getting started.
+
 firebase_cloud_messenger wraps Google's API to make sending push notifications to iOS, android, and
 web push notifications from your server easy.
 
