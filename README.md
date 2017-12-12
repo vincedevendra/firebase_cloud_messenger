@@ -24,12 +24,30 @@ Or install it yourself as:
 
     $ gem install firebase_cloud_messenger
 
-In order for google to authenticate requests to Firebase Cloud Messenger, you must have your
-credentials file in a place that's accessible. You can tell firebase_cloud_messenger where it is in
-two ways:
+## Setup
+In order for google to authenticate requests to Firebase Cloud Messenger, you must either have your
+service account credentials file in a place that's accessible, or provide credentials as env vars.
 
-1. `FirebaseCloudMessenger.credentials_path = "path/to/credentials/file.json"`
-2. `export GOOGLE_APPLICATION_CREDENTIALS = "path/to/credentials/file.json"`
+#### Setup Method 1: Service Account JSON Path Supplied As Env Var
+```bash
+$ export GOOGLE_APPLICATION_CREDENTIALS = "path/to/credentials/file.json"`
+```
+
+#### Setup Method 2: Service Account JSON Path Supplied To FirebaseCloudMessenger
+```ruby
+FirebaseCloudMessenger.credentials_path = "path/to/credentials/file.json"
+```
+
+#### Setup Method 3: Service Account Credentials Set as Env Vars
+``` bash
+$ export GOOGLE_PRIVATE_KEY = "-----BEGIN PRIVATE KEY-----..."
+$ export GOOGLE_CLIENT_EMAIL = "firebase-admin-sdk...@iam.gserviceaccount.com"
+```
+Also set the `project_id`, which is otherwise read from the json service account file:
+
+```ruby
+FirebaseCloudMessenger.project_id = "1234567"
+```
 
 ## Usage
 

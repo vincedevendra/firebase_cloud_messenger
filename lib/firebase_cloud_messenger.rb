@@ -15,16 +15,36 @@ require 'firebase_cloud_messenger/webpush'
 
 module FirebaseCloudMessenger
   class << self
-    attr_accessor :credentials_path
+    attr_accessor :credentials_path, :project_id
   end
 
   def self.send(message: {}, validate_only: false, conn: nil)
-    Client.new(credentials_path).send(message, validate_only, conn)
+    check_setup_complete!
+
+    Client.new(credentials_path, project_id).send(message, validate_only, conn)
   end
 
   def self.validate_message(message, conn = nil, against_api: false)
     message = Message.new(message) if message.is_a?(Hash)
 
     message.valid?(conn, against_api: against_api)
+  end
+
+  private
+
+  def self.check_setup_complete!
+    if !(credentials_path || project_id)
+      msg = <<-ERROR_MSG
+Either a credentials_path or project_id must be supplied. Add one of them like this:
+
+`FirebaseCloudMessenger.credentials_path = "path/to/credentials.json"`
+
+or:
+
+`FirebaseCloudMessenger.project_id = "12345678"`
+     ERROR_MSG
+
+     raise FirebaseCloudMessenger::SetupError, msg
+    end
   end
 end

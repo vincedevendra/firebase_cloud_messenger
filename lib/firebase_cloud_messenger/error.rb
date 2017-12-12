@@ -1,4 +1,6 @@
 module FirebaseCloudMessenger
+  class SetupError < StandardError; end
+
   class Error < StandardError
     attr_reader :response
 

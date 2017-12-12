@@ -5,8 +5,13 @@ module FirebaseCloudMessenger
     attr_writer :max_retry_count, :project_id, :access_token
     attr_accessor :credentials_path
 
-    def initialize(credentials_path = nil)
+    def initialize(credentials_path = nil, project_id = nil)
       @credentials_path = credentials_path || ENV['GOOGLE_APPLICATION_CREDENTIALS']
+      @project_id = project_id
+
+      if !(@credentials_path || @project_id)
+        raise ArgumentError, "Either a project_id or a credentials_path must be supplied"
+      end
     end
 
     def send(message, validate_only, conn)
