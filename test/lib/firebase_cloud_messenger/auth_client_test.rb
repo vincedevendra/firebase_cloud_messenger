@@ -25,8 +25,7 @@ class FirebaseCloudMessenger::AuthClientTest < Minitest::Spec
       credentials_path = "path/to/credentials.json"
       authorizer = mock('authorizer')
       creds_file = mock('creds_file')
-      File.expects(:open).with(credentials_path).returns(creds_file)
-      creds_file.expects(:close)
+      Pathname.expects(:new).with(credentials_path).returns(creds_file)
 
       Google::Auth::ServiceAccountCredentials.expects(:make_creds).with(json_key_io: creds_file, scope: FirebaseCloudMessenger::AuthClient::AUTH_SCOPE).returns(authorizer)
 

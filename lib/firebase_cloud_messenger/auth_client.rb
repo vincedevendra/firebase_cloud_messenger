@@ -1,3 +1,5 @@
+require 'pathname'
+
 module FirebaseCloudMessenger
   class AuthClient
     attr_reader :credentials_path
@@ -35,12 +37,8 @@ module FirebaseCloudMessenger
       args = { scope: AUTH_SCOPE }
       return args unless credentials_path
 
-      begin
-        file = File.open(credentials_path)
-        args.merge(json_key_io: file)
-      ensure
-        file.close
-      end
+      file = Pathname.new(credentials_path)
+      args.merge(json_key_io: file)
     end
   end
 end
