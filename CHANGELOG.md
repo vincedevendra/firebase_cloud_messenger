@@ -1,3 +1,6 @@
+## Version 0.3.0 - February 6, 2017
+* Adds `NotFound` error class and raises for 404 responses
+
 ## Version 0.2.1 - December 22, 2017
 * Fixes bug causing closed credentials file to be passed to the googleauth library. (Thanks to
   @tomek1024 for the patch.)

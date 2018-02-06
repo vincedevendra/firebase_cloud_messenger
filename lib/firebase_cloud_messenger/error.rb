@@ -11,6 +11,7 @@ module FirebaseCloudMessenger
               when 400 then FirebaseCloudMessenger::BadRequest
               when 401 then FirebaseCloudMessenger::Unauthorized
               when 403 then FirebaseCloudMessenger::Forbidden
+              when 404 then FirebaseCloudMessenger::NotFound
               else self
               end
 
@@ -55,4 +56,5 @@ module FirebaseCloudMessenger
   class BadRequest < Error; end
   class Unauthorized < Error; end
   class Forbidden < Error; end
+  class NotFound < Error; end
 end

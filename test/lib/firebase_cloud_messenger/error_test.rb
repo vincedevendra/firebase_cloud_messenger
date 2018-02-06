@@ -13,6 +13,10 @@ class FirebaseCloudMessenger::ErrorTest < MiniTest::Spec
     it "returns a Forbidden based on the response status" do
       assert_equal FirebaseCloudMessenger::Forbidden, FirebaseCloudMessenger::Error.from_response(mock_response("403")).class
     end
+
+    it "returns a NotFound based on the response status" do
+      assert_equal FirebaseCloudMessenger::NotFound, FirebaseCloudMessenger::Error.from_response(mock_response("404")).class
+    end
   end
 
   describe "#new" do
