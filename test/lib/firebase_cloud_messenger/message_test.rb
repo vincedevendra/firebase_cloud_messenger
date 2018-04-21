@@ -38,7 +38,8 @@ class FirebaseCloudMessenger::MessageTest < MiniTest::Spec
         webpush_config = FirebaseCloudMessenger::Webpush::Config.new(notification: webpush_notification)
 
         apns_alert = FirebaseCloudMessenger::Apns::Alert.new(title: "title")
-        apns_payload = FirebaseCloudMessenger::Apns::Payload.new(alert: apns_alert, badge: 2)
+        aps_dictionary = FirebaseCloudMessenger::Apns::ApsDictionary.new(alert: apns_alert, badge: 2)
+        apns_payload = FirebaseCloudMessenger::Apns::Payload.new(aps: aps_dictionary)
         apns_config = FirebaseCloudMessenger::Apns::Config.new(payload: apns_payload)
 
         msg = FirebaseCloudMessenger::Message.new(name: "name",
@@ -57,7 +58,7 @@ class FirebaseCloudMessenger::MessageTest < MiniTest::Spec
           notification: { title: "title" },
           android: { notification: { title: "title" } },
           webpush: { notification: { title: "title" } },
-          apns: { payload: { alert: { title: "title" }, badge: 2 } },
+          apns: { payload: { aps: { alert: { title: "title" }, badge: 2 } } },
           token: "token",
           topic: "topic",
           condition: "condition"
