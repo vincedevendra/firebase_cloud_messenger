@@ -1,3 +1,7 @@
+## Version 0.3.1 - April 23, 2018
+* Fixes APNS message structure
+* Improves format of error messaging for easier debugging
+
 ## Version 0.3.0 - February 6, 2017
 * Adds `NotFound` error class and raises for 404 responses
 
