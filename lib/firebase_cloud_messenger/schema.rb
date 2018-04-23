@@ -90,6 +90,12 @@ module FirebaseCloudMessenger
       "apns_payload" => {
         "type" => "object",
         "properties" => {
+          "aps" => { "$ref" => "#/definitions/aps_dictionary" }
+        }
+      },
+      "aps_dictionary" => {
+        "type" => "object",
+        "properties" => {
           "alert"             => { "$ref" => "#/definitions/apns_alert" },
           "badge"             => { "type" => "number" },
           "sound"             => { "type" => "string" },

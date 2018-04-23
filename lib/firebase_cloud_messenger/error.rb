@@ -40,15 +40,23 @@ module FirebaseCloudMessenger
       parsed_response["error"]["details"]
     end
 
+    def short_message
+      parsed_response["error"]["message"]
+    end
+
     private
 
     def error_message
       return nil if response.nil?
 
       <<-MSG
-      Status: #{response_status}
 
-      #{parsed_response["error"]["message"]}
+
+Status: #{response_status}
+
+Message: #{short_message}
+
+Details: #{details}
       MSG
     end
   end
