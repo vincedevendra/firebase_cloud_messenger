@@ -9,7 +9,7 @@ module FirebaseCloudMessenger
     attr_writer :errors
 
     def initialize(data)
-      super(data, FIELDS)
+      super(data.dup, FIELDS)
     end
 
     def valid?(conn = nil, against_api: false)
