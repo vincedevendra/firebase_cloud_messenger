@@ -66,7 +66,7 @@ Send messages with built-in data objects, which can be built through a hash argu
 initializer or via writer methods:
 ```ruby
 android_notification = FirebaseCloudMessenger::Android::Notification.new(title: "title")
-android_config = FirebaseCloudMessenger::Android::AndroidConfig.new(notification: android_notification)
+android_config = FirebaseCloudMessenger::Android::Config.new(notification: android_notification)
 message = FirebaseCloudMessenger::Message.new(android: android_config, token "a_device_token")
 
 FirebaseCloudMessenger.send(message: message) # => { "name" => "name_from_fcm" }
@@ -76,7 +76,7 @@ FirebaseCloudMessenger.send(message: message) # => { "name" => "name_from_fcm" }
 android_notification = FirebaseCloudMessenger::Android::Notification.new
 android_notification.title = "title"
 
-android_config = FirebaseCloudMessenger::Android::AndroidConfig.new
+android_config = FirebaseCloudMessenger::Android::Config.new
 android_config.notification = android_notification
 
 message = FirebaseCloudMessenger::Message.new
@@ -130,14 +130,14 @@ Many errors can be caught before sending by validating a message before sending 
 
 Validate your message either by via the Firebase Cloud Messenger API:
 ```ruby
-message = FirebaseCloudMessenger.new(android: { bad: "data" })
+message = FirebaseCloudMessenger::Message.new(android: { bad: "data" })
 message.valid?(against_api: true) # => false
 message.errors # => [<error_msg>]
 ```
 
 or client-side, via json-schema:
 ```ruby
-message = FirebaseCloudMessenger.new(android: { bad: "data" }, token: "a_device_token")
+message = FirebaseCloudMessenger::Message.new(android: { bad: "data" }, token: "a_device_token")
 message.valid? # => false
 message.errors # => ["The property '#/android' contains additional properties [\"bad\"] outside of the schema when none are allowed in schema..."]
 ```
@@ -162,4 +162,4 @@ FirebaseCloudMessenger.validate_message(message) # => false
 
 ## Development
 
-After checking out the repo, run `bundle` to install dependencies. Then, run `rake test` to run the tests.
+After checking out the repo, run `bundle` to install dependencies. Then, run `bundle exec rake test` to run the tests.
