@@ -1,7 +1,7 @@
 module FirebaseCloudMessenger
   module Apns
     class ApsDictionary < ApnsObject
-      FIELDS = %i(alert badge sound content_available category thread_id).freeze
+      FIELDS = %i(alert badge sound content_available mutable_content category thread_id).freeze
 
       attr_accessor(*FIELDS)
 

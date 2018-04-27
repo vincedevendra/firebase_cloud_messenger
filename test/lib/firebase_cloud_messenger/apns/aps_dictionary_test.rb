@@ -7,10 +7,11 @@ class FirebaseCloudMessenger::Apns::ApsDictionaryTest < MiniTest::Spec
                                                             badge: "badge",
                                                             sound: "sound",
                                                             content_available: "content_available",
+                                                            mutable_content: "mutable_content",
                                                             category: "category",
                                                             thread_id: "thread_id")
 
-      %i(alert badge sound content_available category thread_id).each do |field|
+      %i(alert badge sound content_available mutable_content category thread_id).each do |field|
         assert_equal field.to_s, msg.send(field)
       end
     end
@@ -28,10 +29,11 @@ class FirebaseCloudMessenger::Apns::ApsDictionaryTest < MiniTest::Spec
                                                             badge: "badge",
                                                             sound: "sound",
                                                             content_available: "content_available",
+                                                            mutable_content: "mutable_content",
                                                             category: "category",
                                                             thread_id: "thread_id")
 
-      expected = %i(alert badge sound content_available category thread_id).each_with_object({}) do |field, hash|
+      expected = %i(alert badge sound content_available mutable_content category thread_id).each_with_object({}) do |field, hash|
         hash[field.to_s.gsub("_", "-").to_sym] = field.to_s
       end
 

@@ -100,6 +100,7 @@ module FirebaseCloudMessenger
           "badge"             => { "type" => "number" },
           "sound"             => { "type" => "string" },
           "content-available" => { "type" => "number" },
+          "mutable-content"   => { "type" => "number" },
           "category"          => { "type" => "string" },
           "thread-id"         => { "type" => "string" }
         },
