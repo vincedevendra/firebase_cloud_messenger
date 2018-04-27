@@ -23,15 +23,6 @@ class FirebaseCloudMessenger::MessageTest < MiniTest::Spec
         FirebaseCloudMessenger::Message.new(foo: "foo")
       end
     end
-
-    it 'does not alter the original hash arg' do
-      hash = { name: 'name', data: 'data' }
-      duped_hash = hash.dup
-
-      FirebaseCloudMessenger::Message.new(hash)
-
-      assert_equal hash, duped_hash
-    end
   end
 
   describe "#to_h" do
