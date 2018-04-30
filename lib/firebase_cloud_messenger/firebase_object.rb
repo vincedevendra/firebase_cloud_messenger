@@ -1,6 +1,7 @@
 module FirebaseCloudMessenger
   class FirebaseObject
     def initialize(data, fields)
+      data = data.dup
       @fields = fields
 
       fields.each do |field|
