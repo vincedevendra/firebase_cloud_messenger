@@ -1,3 +1,9 @@
+## Version 0.4.0 - April 30, 2018
+* Adds support for rich notifications in iOS by allowing the mutable-content aps dict key
+* Fixes bug that mutated the hash argument `::new` in subclasses of `FirebaseObject`
+* Readme fixes
+* Big thanks to @freestyl3r for all the patches in this release!
+
 ## Version 0.3.1 - April 23, 2018
 * Fixes APNS message structure
 * Improves format of error messaging for easier debugging
