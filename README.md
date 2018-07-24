@@ -67,7 +67,7 @@ initializer or via writer methods:
 ```ruby
 android_notification = FirebaseCloudMessenger::Android::Notification.new(title: "title")
 android_config = FirebaseCloudMessenger::Android::Config.new(notification: android_notification)
-message = FirebaseCloudMessenger::Message.new(android: android_config, token "a_device_token")
+message = FirebaseCloudMessenger::Message.new(android: android_config, token: "a_device_token")
 
 FirebaseCloudMessenger.send(message: message) # => { "name" => "name_from_fcm" }
 
