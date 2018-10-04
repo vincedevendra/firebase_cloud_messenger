@@ -9,7 +9,7 @@ module FirebaseCloudMessenger
       end
 
       if data.any?
-        raise ArgumentError, "Keys must be one on #{fields.inspect}"
+        raise ArgumentError, "Keys must be one of #{fields.inspect}"
       end
     end
 
