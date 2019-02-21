@@ -28,17 +28,18 @@ module FirebaseCloudMessenger
       "android_notification" => {
         "type" => "object",
         "properties" => {
-          "title"          => { "type" => "string" },
-          "body"           => { "type" => "string" },
-          "icon"           => { "type" => "string" },
-          "color"          => { "type" => "string" },
-          "sound"          => { "type" => "string" },
-          "tag"            => { "type" => "string" },
-          "click_action"   => { "type" => "string" },
-          "body_loc_key"   => { "type" => "string" },
-          "body_loc_args"  => { "type" => "array", "items" => { "type" => "string" } },
-          "title_loc_key"  => { "type" => "string" },
-          "title_loc_args" => { "type" => "array", "items" => { "type" => "string" } }
+          "title"              => { "type" => "string" },
+          "body"               => { "type" => "string" },
+          "channel_id"         => { "type" => "string" },
+          "icon"               => { "type" => "string" },
+          "color"              => { "type" => "string" },
+          "sound"              => { "type" => "string" },
+          "tag"                => { "type" => "string" },
+          "click_action"       => { "type" => "string" },
+          "body_loc_key"       => { "type" => "string" },
+          "body_loc_args"      => { "type" => "array", "items" => { "type" => "string" } },
+          "title_loc_key"      => { "type" => "string" },
+          "title_loc_args"     => { "type" => "array", "items" => { "type" => "string" } }
         },
         "additionalProperties" => false
       },
