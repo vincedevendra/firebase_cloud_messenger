@@ -51,5 +51,35 @@ class FirebaseCloudMessenger::AuthClientTest < Minitest::Spec
 
       assert_equal "12345", access_token_info["access_token"]
     end
+
+    it "wraps Faraday::ConnectionFailed exceptions with the custom timeout class" do
+      credentials_path = "path/to/credentials.json"
+      authorizer = mock('authorizer')
+      creds_file = mock('creds_file')
+      Pathname.expects(:new).with(credentials_path).returns(creds_file)
+
+      Google::Auth::ServiceAccountCredentials.expects(:make_creds).with(json_key_io: creds_file, scope: FirebaseCloudMessenger::AuthClient::AUTH_SCOPE).returns(authorizer)
+
+      authorizer.expects(:fetch_access_token!).raises(Faraday::ConnectionFailed.new("ConnectTimeout"))
+
+      assert_raises(FirebaseCloudMessenger::ConnectTimeout) do
+        FirebaseCloudMessenger::AuthClient.new(credentials_path).fetch_access_token_info
+      end
+    end
+
+    it "wraps Faraday::TimeoutError exceptions with the custom timeout class" do
+      credentials_path = "path/to/credentials.json"
+      authorizer = mock('authorizer')
+      creds_file = mock('creds_file')
+      Pathname.expects(:new).with(credentials_path).returns(creds_file)
+
+      Google::Auth::ServiceAccountCredentials.expects(:make_creds).with(json_key_io: creds_file, scope: FirebaseCloudMessenger::AuthClient::AUTH_SCOPE).returns(authorizer)
+
+      authorizer.expects(:fetch_access_token!).raises(Faraday::TimeoutError)
+
+      assert_raises(FirebaseCloudMessenger::ReadTimeout) do
+        FirebaseCloudMessenger::AuthClient.new(credentials_path).fetch_access_token_info
+      end
+    end
   end
 end
