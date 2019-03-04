@@ -78,7 +78,7 @@ class FirebaseCloudMessenger::ClientTest < MiniTest::Spec
       client.send(message, false, conn)
     end
 
-    it "wraps Net::OpenTimeout exceptions with the custom timeout classes" do
+    it "wraps Net::OpenTimeout exceptions with the custom timeout class" do
       client.access_token = "foo"
 
       conn = mock("request_conn")
