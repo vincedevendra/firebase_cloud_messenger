@@ -1,3 +1,6 @@
+## Version 0.4.1 - March 12, 2019
+* Reorganizes exception hierarchy
+
 ## Version 0.4.0 - April 30, 2018
 * Adds support for rich notifications in iOS by allowing the mutable-content aps dict key
 * Fixes bug that mutated the hash argument `::new` in subclasses of `FirebaseObject`
