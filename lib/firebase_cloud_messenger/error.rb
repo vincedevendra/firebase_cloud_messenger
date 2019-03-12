@@ -1,7 +1,8 @@
 module FirebaseCloudMessenger
-  class SetupError < StandardError; end
+  class BaseError < StandardError; end
+  class SetupError < BaseError; end
 
-  class Error < StandardError
+  class Error < BaseError
     attr_reader :response
 
     def self.from_response(response)
@@ -65,4 +66,8 @@ Details: #{details}
   class Unauthorized < Error; end
   class Forbidden < Error; end
   class NotFound < Error; end
+
+  class Timeout < BaseError; end
+  class ConnectTimeout < Timeout; end
+  class ReadTimeout < Timeout; end
 end

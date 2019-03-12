@@ -88,6 +88,10 @@ module FirebaseCloudMessenger
       conn.post(send_url.path,
                 request_body(message, validate_only),
                 request_headers)
+    rescue Net::OpenTimeout
+      raise ConnectTimeout
+    rescue Net::ReadTimeout
+      raise ReadTimeout
     end
 
     def message_from_response(response)

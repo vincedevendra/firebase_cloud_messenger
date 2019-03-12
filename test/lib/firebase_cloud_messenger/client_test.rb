@@ -77,6 +77,28 @@ class FirebaseCloudMessenger::ClientTest < MiniTest::Spec
 
       client.send(message, false, conn)
     end
+
+    it "wraps Net::OpenTimeout exceptions with the custom timeout class" do
+      client.access_token = "foo"
+
+      conn = mock("request_conn")
+      conn.expects(:post).raises(Net::OpenTimeout)
+
+      assert_raises(FirebaseCloudMessenger::ConnectTimeout) do
+        client.send(message_to_send, false, conn)
+      end
+    end
+
+    it "wraps Net::ReadTimeout exceptions with the custom timeout class" do
+      client.access_token = "foo"
+
+      conn = mock("request_conn")
+      conn.expects(:post).raises(Net::ReadTimeout)
+
+      assert_raises(FirebaseCloudMessenger::ReadTimeout) do
+        client.send(message_to_send, false, conn)
+      end
+    end
   end
 
   describe "access token fetching and refreshing" do

@@ -2,6 +2,10 @@ require 'test_helper'
 
 class FirebaseCloudMessengerTest < MiniTest::Spec
   describe "::send" do
+    after do
+      FirebaseCloudMessenger.project_id = nil
+    end
+
     it "requires either a project_id or credentials_path" do
       assert_raises FirebaseCloudMessenger::SetupError do
         FirebaseCloudMessenger.send(message: { notification: { title: "title" } })

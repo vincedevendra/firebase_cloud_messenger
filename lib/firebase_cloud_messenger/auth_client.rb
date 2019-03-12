@@ -16,6 +16,10 @@ module FirebaseCloudMessenger
 
     def fetch_access_token_info
       authorizer.fetch_access_token!
+    rescue Faraday::ConnectionFailed
+      raise ConnectTimeout
+    rescue Faraday::TimeoutError
+      raise ReadTimeout
     end
 
     private
