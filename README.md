@@ -104,7 +104,7 @@ FirebaseCloudMessenger.send(message: message) # => { "name" => "name_from_fcm" }
 or some combination of the two:
 
 ```ruby
-message = FirebaseCloudMessenger::Message.new(android: { notification: { title: "title" }, token: "a_device_token" })
+message = FirebaseCloudMessenger::Message.new(android: { notification: { title: "title" } }, token: "a_device_token" )
 FirebaseCloudMessenger.send(message: message) # => { "name" => "name_from_fcm" }
 ```
 
