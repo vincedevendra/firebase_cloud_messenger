@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["vdevendra@patientslikeme.com"]
   spec.homepage      = "https://github.com/patientslikeme/firebase_cloud_messenger"
 
-  spec.summary       = %q{A ruby api wrapper for the FirebaseCloudMesenger API}
+  spec.summary       = %q{A wrapper for the Firebase Cloud Messaging API}
   spec.description   = spec.summary
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test|spec|features)/})
