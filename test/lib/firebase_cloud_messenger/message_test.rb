@@ -9,11 +9,12 @@ class FirebaseCloudMessenger::MessageTest < MiniTest::Spec
                                                 android: "android",
                                                 webpush: "webpush",
                                                 apns: "apns",
+                                                fcm_options: "fcm_options",
                                                 token: "token",
                                                 topic: "topic",
                                                 condition: "condition")
 
-      %i(name data notification android webpush apns token topic condition).each do |field|
+      %i(name data notification android webpush apns fcm_options token topic condition).each do |field|
         assert_equal field.to_s, msg.send(field)
       end
     end
@@ -42,12 +43,15 @@ class FirebaseCloudMessenger::MessageTest < MiniTest::Spec
         apns_payload = FirebaseCloudMessenger::Apns::Payload.new(aps: aps_dictionary)
         apns_config = FirebaseCloudMessenger::Apns::Config.new(payload: apns_payload)
 
+        fcm_options = FirebaseCloudMessenger::FcmOptions.new(analytics_label: "analytics_label")
+
         msg = FirebaseCloudMessenger::Message.new(name: "name",
                                                   data: data,
                                                   notification: notification,
                                                   android: android_config,
                                                   webpush: webpush_config,
                                                   apns: apns_config,
+                                                  fcm_options: fcm_options,
                                                   token: "token",
                                                   topic: "topic",
                                                   condition: "condition")
@@ -61,7 +65,8 @@ class FirebaseCloudMessenger::MessageTest < MiniTest::Spec
           apns: { payload: { aps: { alert: { title: "title" }, badge: 2 } } },
           token: "token",
           topic: "topic",
-          condition: "condition"
+          condition: "condition",
+          fcm_options: { analytics_label: "analytics_label" }
         }
 
         assert_equal expected, msg.to_h
@@ -77,6 +82,7 @@ class FirebaseCloudMessenger::MessageTest < MiniTest::Spec
           android: { notification: { title: "title" } },
           webpush: { notification: { title: "title" } },
           apns: { payload: { alert: { title: "title" }, badge: 2 } },
+          fcm_options: { analytics_label: "analytics_label" },
           token: "token",
           topic: "topic",
           condition: "condition"

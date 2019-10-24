@@ -1,9 +1,10 @@
 require 'firebase_cloud_messenger/schema'
+require 'firebase_cloud_messenger/fcm_options'
 require 'json-schema'
 
 module FirebaseCloudMessenger
   class Message < FirebaseObject
-    FIELDS = %i(name data notification android webpush apns token topic condition).freeze
+    FIELDS = %i(name data notification android webpush apns token topic condition fcm_options).freeze
     attr_accessor(*FIELDS)
 
     attr_writer :errors

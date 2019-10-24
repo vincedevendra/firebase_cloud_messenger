@@ -4,7 +4,8 @@ class FirebaseCloudMessenger::NotificationTest < MiniTest::Spec
   describe "#new" do
     it "sets properties based on the hash arg" do
       msg = FirebaseCloudMessenger::Notification.new(title: "title",
-                                                     body: "body")
+                                                     body: "body",
+                                                     image: "image")
 
       %i(title body).each do |field|
         assert_equal field.to_s, msg.send(field)
@@ -21,9 +22,10 @@ class FirebaseCloudMessenger::NotificationTest < MiniTest::Spec
   describe "#to_h" do
     it "returns a hash version of the object" do
       msg = FirebaseCloudMessenger::Notification.new(title: "title",
-                                                     body: "body")
+                                                     body: "body",
+                                                     image: "image")
 
-      expected = %i(title body).each_with_object({}) do |field, hash|
+      expected = %i(title body image).each_with_object({}) do |field, hash|
         hash[field] = field.to_s
       end
 

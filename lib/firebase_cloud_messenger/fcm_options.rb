@@ -1,6 +1,7 @@
 module FirebaseCloudMessenger
-  class Notification < FirebaseObject
-    FIELDS = %i(title body image)
+  class FcmOptions < FirebaseObject
+    FIELDS = %i(analytics_label).freeze
+
     attr_accessor(*FIELDS)
 
     def initialize(data)

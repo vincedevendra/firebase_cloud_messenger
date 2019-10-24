@@ -1,7 +1,7 @@
 module FirebaseCloudMessenger
   module Android
     class Config < FirebaseObject
-      FIELDS = %i(collapse_key priority ttl restricted_package_name data notification).freeze
+      FIELDS = %i(collapse_key priority ttl restricted_package_name data notification fcm_options).freeze
       attr_accessor(*FIELDS)
 
       def initialize(data)

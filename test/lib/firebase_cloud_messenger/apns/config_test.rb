@@ -3,9 +3,9 @@ require 'test_helper'
 class FirebaseCloudMessenger::Apns::ConfigTest < MiniTest::Spec
   describe "#new" do
     it "sets properties based on the hash arg" do
-      msg = FirebaseCloudMessenger::Apns::Config.new(headers: "headers", payload: "payload")
+      msg = FirebaseCloudMessenger::Apns::Config.new(headers: "headers", payload: "payload", fcm_options: "fcm_options")
 
-      %i(headers payload).each do |field|
+      %i(headers payload fcm_options).each do |field|
         assert_equal field.to_s, msg.send(field)
       end
     end
@@ -19,9 +19,9 @@ class FirebaseCloudMessenger::Apns::ConfigTest < MiniTest::Spec
 
   describe "#to_h" do
     it "returns a hash version of the object" do
-      msg = FirebaseCloudMessenger::Apns::Config.new(headers: "headers", payload: "payload")
+      msg = FirebaseCloudMessenger::Apns::Config.new(headers: "headers", payload: "payload", fcm_options: "fcm_options")
 
-      expected = %i(headers payload).each_with_object({}) do |field, hash|
+      expected = %i(headers payload fcm_options).each_with_object({}) do |field, hash|
         hash[field.to_s.gsub("_", "-").to_sym] = field.to_s
       end
 

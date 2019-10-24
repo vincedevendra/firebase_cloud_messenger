@@ -1,3 +1,7 @@
+## Version 0.5.0 - October 24, 2019
+* Add support for the new `fcm_options` attribute
+* Add support for the new `notification.image` attribute
+
 ## Version 0.4.1 - March 12, 2019
 * Reorganizes exception hierarchy
 

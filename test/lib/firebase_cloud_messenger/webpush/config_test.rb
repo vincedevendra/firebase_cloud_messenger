@@ -5,9 +5,10 @@ class FirebaseCloudMessenger::Webpush::ConfigTest < MiniTest::Spec
     it "sets properties based on the hash arg" do
       msg = FirebaseCloudMessenger::Webpush::Config.new(headers: "headers",
                                                         data: "data",
-                                                        notification: "notification")
+                                                        notification: "notification",
+                                                        fcm_options: "fcm_options")
 
-      %i(headers data notification).each do |field|
+      %i(headers data notification fcm_options).each do |field|
         assert_equal field.to_s, msg.send(field)
       end
     end
@@ -23,9 +24,10 @@ class FirebaseCloudMessenger::Webpush::ConfigTest < MiniTest::Spec
     it "returns a hash version of the object" do
       msg = FirebaseCloudMessenger::Webpush::Config.new(headers: "headers",
                                                         data: "data",
-                                                        notification: "notification")
+                                                        notification: "notification",
+                                                        fcm_options: "fcm_options")
 
-      expected = %i(headers data notification).each_with_object({}) do |field, hash|
+      expected = %i(headers data notification fcm_options).each_with_object({}) do |field, hash|
         hash[field] = field.to_s
       end
 
