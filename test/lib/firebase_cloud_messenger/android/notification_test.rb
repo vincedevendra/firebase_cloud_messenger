@@ -13,9 +13,10 @@ class FirebaseCloudMessenger::Android::NotificationTest < MiniTest::Spec
                                                               body_loc_key: "body_loc_key",
                                                               body_loc_args: "body_loc_args",
                                                               title_loc_key: "title_loc_key",
-                                                              title_loc_args: "title_loc_args")
+                                                              title_loc_args: "title_loc_args",
+                                                              image: "image")
 
-      %i(title body icon color sound tag click_action body_loc_key body_loc_args title_loc_key title_loc_args).each do |field|
+      %i(title body icon color sound tag click_action body_loc_key body_loc_args title_loc_key title_loc_args image).each do |field|
         assert_equal field.to_s, msg.send(field)
       end
     end
@@ -39,9 +40,10 @@ class FirebaseCloudMessenger::Android::NotificationTest < MiniTest::Spec
                                                               body_loc_key: "body_loc_key",
                                                               body_loc_args: "body_loc_args",
                                                               title_loc_key: "title_loc_key",
-                                                              title_loc_args: "title_loc_args")
+                                                              title_loc_args: "title_loc_args",
+                                                              image: "image")
 
-      expected = %i(title body icon color sound tag click_action body_loc_key body_loc_args title_loc_key title_loc_args).each_with_object({}) do |field, hash|
+      expected = %i(title body icon color sound tag click_action body_loc_key body_loc_args title_loc_key title_loc_args image).each_with_object({}) do |field, hash|
         hash[field] = field.to_s
       end
 

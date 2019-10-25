@@ -1,7 +1,8 @@
 module FirebaseCloudMessenger
   module Apns
-    class Config < ApnsObject
-      FIELDS = %i(headers payload fcm_options).freeze
+    class FcmOptions < ApnsObject
+      FIELDS = %i(analytics_label image).freeze
+
       attr_accessor(*FIELDS)
 
       def initialize(data)

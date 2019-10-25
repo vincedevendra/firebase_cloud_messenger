@@ -8,9 +8,10 @@ class FirebaseCloudMessenger::Android::ConfigTest < MiniTest::Spec
                                                         ttl: "ttl",
                                                         restricted_package_name: "restricted_package_name",
                                                         data: "data",
-                                                        notification: "notification")
+                                                        notification: "notification",
+                                                        fcm_options: "fcm_options")
 
-      %i(collapse_key priority ttl restricted_package_name data notification).each do |field|
+      %i(collapse_key priority ttl restricted_package_name data notification fcm_options).each do |field|
         assert_equal field.to_s, msg.send(field)
       end
     end
@@ -29,9 +30,10 @@ class FirebaseCloudMessenger::Android::ConfigTest < MiniTest::Spec
                                                         ttl: "ttl",
                                                         restricted_package_name: "restricted_package_name",
                                                         data: "data",
-                                                        notification: "notification")
+                                                        notification: "notification",
+                                                        fcm_options: "fcm_options")
 
-      expected = %i(collapse_key priority ttl restricted_package_name data notification).each_with_object({}) do |field, hash|
+      expected = %i(collapse_key priority ttl restricted_package_name data notification fcm_options).each_with_object({}) do |field, hash|
         hash[field] = field.to_s
       end
 

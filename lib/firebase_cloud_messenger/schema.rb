@@ -9,7 +9,8 @@ module FirebaseCloudMessenger
         "type" => "object",
         "properties" => {
           "title" => { "type" => "string" },
-          "body"  => { "type" => "string" }
+          "body"  => { "type" => "string" },
+          "image" => { "type" => "string" }
         },
         "additionalProperties" => false
       },
@@ -21,7 +22,8 @@ module FirebaseCloudMessenger
           "ttl"                      => { "type" => "string", "format" => "^[0-9]+\.[0-9]+s$" },
           "restricted_package_name"  => { "type" => "string" },
           "data"                     => { "$ref" => "#/definitions/data" },
-          "notification"             => { "$ref" => "#/definitions/android_notification" }
+          "notification"             => { "$ref" => "#/definitions/android_notification" },
+          "fcm_options"              => { "$ref" => "#/definitions/fcm_options" }
         },
         "additionalProperties" => false
       },
@@ -39,7 +41,8 @@ module FirebaseCloudMessenger
           "body_loc_key"       => { "type" => "string" },
           "body_loc_args"      => { "type" => "array", "items" => { "type" => "string" } },
           "title_loc_key"      => { "type" => "string" },
-          "title_loc_args"     => { "type" => "array", "items" => { "type" => "string" } }
+          "title_loc_args"     => { "type" => "array", "items" => { "type" => "string" } },
+          "image"              => { "type" => "string" }
         },
         "additionalProperties" => false
       },
@@ -48,7 +51,8 @@ module FirebaseCloudMessenger
         "properties" => {
           "headers"      => { "$ref" => "#/definitions/data" },
           "data"         => { "$ref" => "#/definitions/data" },
-          "notification" => { "$ref" => "#/definitions/webpush_notification" }
+          "notification" => { "$ref" => "#/definitions/webpush_notification" },
+          "fcm_options"  => { "$ref" => "#/definitions/fcm_options" },
         },
         "additionalProperties" => false
       },
@@ -64,8 +68,16 @@ module FirebaseCloudMessenger
       "apns" => {
         "type" => "object",
         "properties" => {
-          "headers" => { "$ref" => "#/definitions/data" },
-          "payload" => { "$ref" => "#/definitions/apns_payload" }
+          "headers"     => { "$ref" => "#/definitions/data" },
+          "payload"     => { "$ref" => "#/definitions/apns_payload" },
+          "fcm_options" => { "$ref" => "#/definitions/apns_fcm_options" }
+        },
+        "additionalProperties" => false
+      },
+      "fcm_options" => {
+        "type" => "object",
+        "properties" => {
+          "analytics_label" => { "type" => "string" },
         },
         "additionalProperties" => false
       },
@@ -106,7 +118,14 @@ module FirebaseCloudMessenger
           "thread-id"         => { "type" => "string" }
         },
         "additionalProperties" => false
-      }
+      },
+      "apns_fcm_options" => {
+        "type" => "object",
+        "properties" => {
+          "analytics_label" => { "type" => "string" },
+          "image"           => { "type" => "string" },
+        }
+      },
     },
     "type" => "object",
     "properties" => {
