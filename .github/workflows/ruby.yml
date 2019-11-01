@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        key: ['2.4.x', '2.5.x', '2.6.x']
+        key: [ '2.4.x', '2.5.x', '2.6.x' ]
     name: Test against ${{ matrix.ruby }}
     steps:
     - uses: actions/checkout@v1
@@ -16,6 +16,7 @@ jobs:
       uses: actions/setup-ruby@v1
       with:
         ruby-version: ${{ matrix.ruby }}
+        architecture: 'x64'
     - name: Build and test with Rake
       run: |
         gem install bundler
