@@ -30,19 +30,50 @@ module FirebaseCloudMessenger
       "android_notification" => {
         "type" => "object",
         "properties" => {
-          "title"              => { "type" => "string" },
-          "body"               => { "type" => "string" },
-          "channel_id"         => { "type" => "string" },
-          "icon"               => { "type" => "string" },
-          "color"              => { "type" => "string" },
-          "sound"              => { "type" => "string" },
-          "tag"                => { "type" => "string" },
-          "click_action"       => { "type" => "string" },
-          "body_loc_key"       => { "type" => "string" },
-          "body_loc_args"      => { "type" => "array", "items" => { "type" => "string" } },
-          "title_loc_key"      => { "type" => "string" },
-          "title_loc_args"     => { "type" => "array", "items" => { "type" => "string" } },
-          "image"              => { "type" => "string" }
+          "title"                   => { "type" => "string" },
+          "body"                    => { "type" => "string" },
+          "channel_id"              => { "type" => "string" },
+          "icon"                    => { "type" => "string" },
+          "color"                   => { "type" => "string" },
+          "sound"                   => { "type" => "string" },
+          "tag"                     => { "type" => "string" },
+          "click_action"            => { "type" => "string" },
+          "body_loc_key"            => { "type" => "string" },
+          "body_loc_args"           => { "type" => "array", "items" => { "type" => "string" } },
+          "title_loc_key"           => { "type" => "string" },
+          "title_loc_args"          => { "type" => "array", "items" => { "type" => "string" } },
+          "ticker"                  => { "type" => "string" },
+          "sticky"                  => { "type" => "boolean" },
+          "event_time"              => { "type" => "string" },
+          "local_only"              => { "type" => "boolean" },
+          "notification_priority"   => { "type" => "string", "enum" => ["PRIORITY_UNSPECIFIED", "PRIORITY_MIN", "PRIORITY_LOW", "PRIORITY_DEFAULT", "PRIORITY_HIGH", "PRIORITY_HIGH"] },
+          "default_sound"           => { "type" => "boolean" },
+          "default_vibrate_timings" => { "type" => "boolean" },
+          "default_light_settings"  => { "type" => "boolean" },
+          "vibrate_timings"         => { "type" => "array", "items" => { "type" => "string" } },
+          "visibility"              => { "type" => "string", "enum" => ["VISIBILITY_UNSPECIFIED", "PRIVATE", "PUBLIC", "SECRET"] },
+          "notification_count"      => { "type" => "number" },
+          "light_settings"          => { "$ref" => "#/definitions/light_settings" },
+          "image"                   => { "type" => "string" }
+        },
+        "additionalProperties" => false
+      },
+      "light_settings" => {
+        "type" => "object",
+        "properties" => {
+          "color"              => { "$ref" => "#/definitions/color" },
+          "light_on_duration"  => { "type" => "string" },
+          "light_off_duration" => { "type" => "string" }
+        },
+        "additionalProperties" => false
+      },
+      "color" => {
+        "type" => "object",
+        "properties" => {
+          "red"   => { "type" => "number" },
+          "green" => { "type" => "number" },
+          "blue"  => { "type" => "number" },
+          "alpha" => { "type" => "number" }
         },
         "additionalProperties" => false
       },
@@ -52,7 +83,7 @@ module FirebaseCloudMessenger
           "headers"      => { "$ref" => "#/definitions/data" },
           "data"         => { "$ref" => "#/definitions/data" },
           "notification" => { "$ref" => "#/definitions/webpush_notification" },
-          "fcm_options"  => { "$ref" => "#/definitions/fcm_options" },
+          "fcm_options"  => { "$ref" => "#/definitions/webpush_fcm_options" },
         },
         "additionalProperties" => false
       },
@@ -62,6 +93,13 @@ module FirebaseCloudMessenger
           "title"          => { "type" => "string" },
           "body"           => { "type" => "string" },
           "icon"           => { "type" => "string" }
+        },
+        "additionalProperties" => false
+      },
+      "webpush_fcm_options" => {
+        "type" => "object",
+        "properties" => {
+          "link" => { "type" => "string" }
         },
         "additionalProperties" => false
       },

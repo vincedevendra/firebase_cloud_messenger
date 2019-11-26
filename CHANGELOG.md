@@ -1,6 +1,9 @@
 ## Version 0.5.0 - October 24, 2019
-* Add support for the new `fcm_options` attribute
-* Add support for the new `notification.image` attribute
+* Introduce latest FCM payload changes:
+  - `notification.image`
+  - `fcm_options`
+  - 11 new fields on `android.notification`
+
 
 ## Version 0.4.1 - March 12, 2019
 * Reorganizes exception hierarchy
